@@ -8,8 +8,11 @@ package org;
 	import java.awt.GridLayout;
 	import java.awt.event.MouseAdapter;
 	import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 
-	import javax.swing.JButton;
+import javax.swing.JButton;
 	import javax.swing.JFrame;
 	import javax.swing.JPanel;
 	import javax.swing.JTextField;
@@ -186,19 +189,32 @@ import bsh.Interpreter;
 			} catch (EvalError e) {
 				e.printStackTrace();
 			}
-			/**if (operacion.equals("+")) {
-				resultado += new Double(pantalla.getText());
-			} else if (operacion.equals("-")) {
-				resultado -= new Double(pantalla.getText());
-			} else if (operacion.equals("/")) {
-				resultado /= new Double(pantalla.getText());
-			} else if (operacion.equals("*")) {
-				resultado *= new Double(pantalla.getText());
-			}
-             
-			pantalla.setText("" + resultado);*/
+		
+			
+			guardarResultadoOperacion(ecuacion);
+			
 			operacion = "";
 		}
+		
+		
+		private void guardarResultadoOperacion(String ecuacion){
+			
+		try {
+			byte[] data= ecuacion.concat("  ").concat(pantalla.getText()).getBytes(Charset.forName("UTF-B"));
+			File file= new File("resultados.txt");
+					if (file.createNewFile()) {
+						FileOutputStream out = new FileOutputStream("resultados");
+						out.write(data);
+						out.close();
+					}else{
+						FileOutputStream out = new FileOutputStream("resultados");
+						out.write(data);
+						out.close();
+					}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}	
+		}	
 	}
 
 
